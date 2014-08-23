@@ -53,8 +53,7 @@
                 
                 var my_patients = new Apigee.Collection( { "client":apigee, "type":"patients", "qs":{"limit":50, "ql":"select *"} } );
                 
-                // We now define my_books within the global scope
-                //var my_books = new Apigee.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"select *"} } );
+                // We now define my_patients within the global scope
                 //my_books = new Usergrid.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"order by created desc"} } );
 
                 $(document).ready(function () {
@@ -62,7 +61,6 @@
                     
                     //navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-                    //loadBooks();
                     loadPatients();
                 });
                 
@@ -70,7 +68,7 @@
                 function onSuccess(position) {
                     alert("Success "+ position.coords.latitude + "," + position.coords.longitude);
                     
-                    loadBooks();
+                    loadPatients();
                     
                     //var geostring = 'Latitude: ' + position.coords.latitude + '<br />' +
                     //'Longitude: '          + position.coords.longitude             + '<br />' +
@@ -134,7 +132,7 @@
     <body>
         <br><br>
         <div data-role="page" data-control-title="Home" id="page1">
-            <div data-theme="c" data-role="header">
+            <div data-theme="c" data-role="header" data-position="fixed">
                 <h1 id="bar">
                     Hossip #FEEDS
                 </h1>
