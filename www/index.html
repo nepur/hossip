@@ -95,7 +95,172 @@
         </script>
     </head>
     <body>
-
+        <div data-role="page" data-control-title="Home" id="page1">
+            <div data-role="panel" id="panel1" data-position="left" data-display="reveal"
+                data-theme="a">
+                <ul data-role="listview" data-divider-theme="h" data-inset="false">
+                    <li data-role="list-divider" role="heading">
+                        #feeds
+                    </li>
+                    <li data-theme="a">
+                        <a href="#page1" data-transition="slide">
+                            #Patient4321
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div data-theme="c" data-role="header">
+                <h1 id="bar">
+                    Hossip #FEEDS
+                </h1>
+            </div>
+            <div data-role="content">
+                <div id="feed" data-role="navbar" data-iconpos="left">
+                    <ul>
+                        <li>
+                            <a href="#page4" data-transition="fade" data-theme="" data-icon="gear">
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <div data-role="fieldcontain" data-controltype="searchinput">
+                    <input name="" id="Search" placeholder="" value="Search" type="search">
+                        </div>
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-theme="c">
+                        <a href="#page3" data-transition="slide">
+                            #PatientID4321
+                            <span class="ui-li-count">
+                                3
+                            </span>
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page1" data-transition="slide">
+                            #PatientID1234
+                            <span class="ui-li-count">
+                                2
+                            </span>
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page1" data-transition="slide">
+                            #PatientID3241
+                            <span class="ui-li-count">
+                                1
+                            </span>
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page1" data-transition="slide">
+                            #PatientID3142
+                        </a>
+                    </li>
+                </ul>
+                <a data-controltype="panelbutton" data-role="button" href="#panel1" data-icon="bars"
+                    data-iconpos="left">
+                    Panel
+                </a>
+            </div>
+            <div id="htabbar" data-role="tabbar" data-iconpos="left" data-theme="c">
+                <ul>
+                    <li>
+                        <a href="#" data-transition="fade" data-theme="" data-icon="info">
+                            Add a feed
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="page" data-control-title="Patient" id="page3">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-rel="back" href="#page1" class="ui-btn-left">
+                    Back
+                </a>
+                <h3>
+                    #Patient4321
+                </h3>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain" data-controltype="searchinput">
+                    <input name="Search" id="searchinput2" placeholder="" value="Search" type="search"
+                        data-mini="true">
+                        </div>
+                <hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <div data-controltype="textblock">
+                    <p>
+                    <b>
+                        <b>
+                            [12:00AM 8/24/2014]&nbsp;
+                        </b>
+                        Dr H : Patient is now doing well.
+                    </b>
+                    </p>
+                    <p>
+                    <span style="color: rgb(255, 0, 0);" data-mce-style="color: #ff0000;">
+                        <b>
+                            <b>
+                                [11:00PM 8/24/2014]&nbsp;
+                            </b>
+                            Nurse1: Just checked the patient he is not well.
+                        </b>
+                    </span>
+                    </p>
+                </div>
+                <h5>
+                    ..::Today [8/24/2014]
+                </h5>
+                <hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <div data-controltype="textblock">
+                    <p>
+                    <b>
+                        <b>
+                            [11:00AM 8/23/2014]&nbsp;
+                        </b>
+                        Intern1: Patient admitted.
+                    </b>
+                    </p>
+                </div>
+                <h5>
+                    ..::Yesterday [8/23/2014]
+                </h5>
+            </div>
+            <div id="ptabbar" data-role="tabbar" data-iconpos="left" data-theme="c">
+                <ul>
+                    <li>
+                        <a href="#" data-transition="fade" data-theme="" data-icon="info">
+                            Team Members
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-transition="fade" data-theme="" data-icon="delete">
+                            Un-subscribe
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="page" data-control-title="Settings" id="page4">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-rel="back" href="#page4" class="ui-btn-left">
+                    Back
+                </a>
+                <h3>
+                    Settings
+                </h3>
+            </div>
+            <div data-role="content">
+            </div>
+        </div>
+        <div data-role="page" data-control-title="Unsubscribe" id="page6">
+            <div data-role="content">
+            </div>
+        </div>
+    </body>
+<!--
+    <body>
         <div data-role="page" data-theme="c" id="page-books-list">
             <div data-role="header" data-theme="b" data-position="fixed">
                 <h1>My Books</h1>
@@ -131,6 +296,6 @@
                 <button id="create-button" data-inline="true">Create</button>
             </div>
         </div>
-
     </body>
+-->
 </html>
