@@ -134,14 +134,14 @@
         <div data-role="page" data-control-title="Home" id="page1">
             <div data-theme="c" data-role="header" data-position="fixed">
                 <h1 id="bar">
-                    Hossip #FEEDS
+                    #hossip
                 </h1>
             </div>
             <div data-role="content">
                 <div id="feed" data-role="navbar" data-iconpos="left">
                     <ul>
                         <li>
-                            <a href="#" data-transition="fade" data-theme="" data-icon="gear">
+                            <a href="#settings" data-transition="fade" data-theme="" data-icon="gear">
                                 Settings
                             </a>
                         </li>
@@ -170,54 +170,160 @@
                     </li>
                 </ul>
             </div>
-            <div id="htabbar" data-role="tabbar" data-iconpos="left" data-theme="c">
+            <div id="trhome" data-role="tabbar" data-iconpos="left" data-theme="c">
                 <ul>
                     <li>
-                        <a href="#" data-transition="fade" data-theme="" data-icon="plus">
-                            Add a feed
+                        <a href="#" data-transition="slidefade" data-theme="" data-icon="plus">
+                            Join care team
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
+        <div data-role="page" data-control-title="Settings" id="settings">
+            <div id="hrsettings" data-theme="c" data-role="header">
+                <a id="bksettings" data-role="button" data-rel="back" href="#home" class="ui-btn-left">
+                    Back
+                </a>
+                <h3>
+                    Settings
+                </h3>
+            </div>
+            <div data-role="content">
+                <div style="display: inline" data-controltype="image">
+                    <img style="width: 100px; height: 100px" src="http://lifebydavidpoole.files.wordpress.com/2014/01/david-poole1.jpg">
+                        </div>
+                <div data-controltype="textblock">
+                    <p>
+                    <span style="font-family: 'comic sans ms', sans-serif;">
+                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
+                            Name: FirstName,&nbsp;
+                        </span>
+                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
+                            Last
+                        </span>
+                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
+                            nam
+                        </span>
+                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
+                            e
+                            <br>
+                        </span>
+                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
+                            Role: Attending﻿
+                        </span>
+                    </span>
+                    </p>
+                </div>
+                <div id="checkboxes1" data-role="fieldcontain" data-controltype="checkboxes">
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend>
+                            Filter feeds:
+                        </legend>
+                        <input id="checkbox3" name="" type="checkbox">
+                            <label for="checkbox3">
+                                Ecnounters
+                            </label>
+                            <input id="checkbox6" name="" type="checkbox">
+                                <label for="checkbox6">
+                                    Orders
+                                </label>
+                                <input id="checkbox5" name="" type="checkbox">
+                                    <label for="checkbox5">
+                                        Notes
+                                    </label>
+                                    <input id="checkbox2" name="" type="checkbox">
+                                        <label for="checkbox2">
+                                            Rad
+                                        </label>
+                                        <input id="checkbox1" name="" type="checkbox">
+                                            <label for="checkbox1">
+                                                Labs
+                                            </label>
+                                            <input id="checkbox4" name="" type="checkbox">
+                                                <label for="checkbox4">
+                                                    User Messages
+                                                </label>
+                     </fieldset>
+                </div>
+            </div>
+        </div>
+        <!-- Feed page starts here -->
+        <div data-role="page" data-control-title="Patient" id="feed">
+            <div data-theme="c" data-role="header">
+                <a data-role="button" data-rel="back" href="#home" class="ui-btn-left">
+                    Back
+                </a>
+                <h2>
+                    #Patient4321
+                </h2>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain" data-controltype="searchinput">
+                    <input name="Search" id="searchinput2" placeholder="Search" value="" type="search"
+                        data-mini="true">
+                        </div>
+                <div data-controltype="textblock">
+                    <p style="text-align: center;" data-mce-style="text-align: center;">
+                    <span style="color: rgb(192, 192, 192); font-size: x-small;" data-mce-style="color: #c0c0c0; font-size: x-small;">
+                        Applied Filters: Encounters
+                    </span>
+                    </p>
+                </div>
+                <hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <div data-controltype="textblock">
+                    <p>
+                    <span style="font-size: small; font-family: 'comic sans ms', sans-serif;"
+                        data-mce-style="font-size: small; font-family: 'comic sans ms', sans-serif;">
+                        [12:00AM 8/24/2014]&nbsp;Dr H : Patient is now doing well.
+                    </span>
+                    </p>
+                </div>
+                <hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <div data-controltype="textblock">
+                    <p>
+                    <span style="font-family: 'comic sans ms', sans-serif; font-size: small;">
+                        [11:00PM 8/24/2014]&nbsp;Nurse1: Just checked the patient he is not well.
+                    </span>
+                    </p>
+                </div>
+                <hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <h5>
+                    ..::Today [8/24/2014]
+                </h5>
+                <hr style="height:3px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <div data-controltype="textblock">
+                    <p>
+                    <span style="font-family: 'comic sans ms', sans-serif; font-size: small;"
+                        data-mce-style="font-family: 'comic sans ms', sans-serif; font-size: small;">
+                        ﻿[11:00AM 8/23/2014]&nbsp;Intern1: Patient admitted.
+                    </span>
+                    </p>
+                </div>
+                <hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">
+                <h5>
+                    ..::Yesterday [8/23/2014]
+                </h5>
+                <div data-role="fieldcontain" data-controltype="textarea">
+                    <textarea name="" id="textarea1" placeholder="" data-mini="true"></textarea>
+                </div>
+                <input type="submit" data-theme="c" value="Submit">
+                    </div>
+            <div id="trpatient" data-role="tabbar" data-iconpos="left" data-theme="c">
+                <ul>
+                    <li>
+                        <a href="#" data-transition="slidefade" data-theme="" data-icon="info">
+                            Team Members
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-transition="fade" data-theme="" data-icon="delete">
+                            Leave care team
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Feed page ends here -->
     </body>
-    <!--
-     <body>
-     <div data-role="page" data-theme="c" id="page-books-list">
-     <div data-role="header" data-theme="b" data-position="fixed">
-     <h1>My Books</h1>
-     <a href="#page-new-book" id="btn-compose" data-icon="plus" data-iconpos="right" data-inline="true" data-role="button" data-rel="dialog" data-transition="fade" class="ui-btn-right">Add</a>
-     </div>
-     <div data-role="content">
-     <ul id="books-list"  data-role="listview" data-inset="false" >
-     <li>
-     <h3>First Title</h3>
-     <p>First author</p>
-     </li>
-     <li>
-     <h3>Second Title</h3>
-     <p>Second author</p>
-     </li>
-     </ul>
-     </div>
-     </div>
-     
-     
-     <div data-role="page" data-theme="b" id="page-new-book">
-     <div data-role="header" data-theme="b" data-position="fixed">
-     <h1>Add a New Book</h1>
-     </div>
-     <div data-role="content">
-     <form>
-     <label for="title-field">Title</label>
-     <textarea id="title-field"></textarea>
-     <label for="author-field">Author</label>
-     <textarea id="author-field"></textarea>
-     </form>    
-     <a data-rel="back" data-role="button" data-theme="c" data-inline="true">Cancel</a>
-     <button id="create-button" data-inline="true">Create</button>
-     </div>
-     </div>
-     </body>
-     -->
-</html>
+    </html>
