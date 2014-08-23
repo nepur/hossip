@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>AE9B8300-9240-4195-8760-F9E40A359E8A</string>
+	<string>675CE14E-2353-49F3-ACCF-E68C4E25B1CF</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Hossip</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>EFEA8419-6E5F-4E9C-BDF7-45A38295E8F4</key>
-		<string>https://github.com/nepur/hossip</string>
+		<key>FBB2688A-A4C4-4988-8256-E1130C3D9710</key>
+		<string>https://github.com/nepur/hossip.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>platforms/ios/Hossip.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>EFEA8419-6E5F-4E9C-BDF7-45A38295E8F4</key>
+		<key>FBB2688A-A4C4-4988-8256-E1130C3D9710</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/nepur/hossip</string>
+	<string>https://github.com/nepur/hossip.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>EFEA8419-6E5F-4E9C-BDF7-45A38295E8F4</string>
+	<string>FBB2688A-A4C4-4988-8256-E1130C3D9710</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>EFEA8419-6E5F-4E9C-BDF7-45A38295E8F4</string>
+			<string>FBB2688A-A4C4-4988-8256-E1130C3D9710</string>
 			<key>IDESourceControlWCCName</key>
 			<string>hossip</string>
 		</dict>

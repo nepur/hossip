@@ -5,100 +5,128 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="apple-mobile-web-app-capable" content="yes">
             <meta name="apple-mobile-web-app-status-bar-style" content="black">
-            <!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
-            <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-            <script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>-->
-            <script src="http://raw.github.com/apigee/usergrid-javascript-sdk/master/usergrid.min.js"></script>
             <script type="text/javascript" src="cordova-2.6.0.js"></script>
             <link href="css/codiqa.ext.min.css" rel="stylesheet">
             <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
             <script src="js/jquery-1.9.1.min.js"></script>
             <script src="js/jquery.mobile-1.3.1.min.js"></script>
             <script src="js/codiqa.ext.min.js"></script>
+            <script src="js/apigee.js"></script>
             <script src="js/hossip.js"></script>
-            <!--<script type="text/javascript">
+            <script>
+                (function() {
+                  var global = global||this,
+                    APIGEE_ORGNAME="rupenp",
+                    APIGEE_APPNAME="sandbox";
+                    if("undefined"===typeof APIGEE_ORGNAME || "Your Org Name" === APIGEE_ORGNAME){
+                        APIGEE_ORGNAME=prompt("What is the Organization Name you registered at http://apigee.com/usergrid ?\n(you can set this permanently on line 14)", "ORG NAME");
+                    }
+                    if("undefined"===typeof APIGEE_APPNAME || "Your App Name" === APIGEE_APPNAME){
+                        APIGEE_APPNAME=prompt("What is the App Name you created at http://apigee.com/usergrid ?\n(you can set this permanently in on line 15)", "sandbox");
+                    }
+                    global.APIGEE_ORGNAME=APIGEE_ORGNAME;
+                    global.APIGEE_APPNAME=APIGEE_APPNAME;
+                })();
+
+            </script>
+            <script type="text/javascript">
+
+                if("undefined"===typeof APIGEE_ORGNAME){
+                    APIGEE_ORGNAME=prompt("What is the Organization Name you registered at http://apigee.com/usergrid ?\n(you can set this permanently in config.js)", "ORG NAME");
+                }
+                if("undefined"===typeof APIGEE_APPNAME){
+                    APIGEE_APPNAME="sandbox";
+                }
+                //We start by creating an instance of Apigee.Client to carry our App Services credentials        
+                var apigee = new Apigee.Client({
+                    orgName:APIGEE_ORGNAME,
+                    appName:APIGEE_APPNAME,
+                    logging: true, //optional - turn on logging, off by default
+                    buildCurl: true //optional - log network calls in the console, off by default
+
+                    
+                });
                 
-                var apigee = new Usergrid.Client({
-                                                 orgName:'rupenp',
-                                                 appName:'sandbox'
-                                                 });
-                                                 
-                                                 
-                                                 $(document).ready(function () {
-                                                                   // A Collection object that will be used to hold the list of books locally
-                                                                   var my_books;// = new Usergrid.Collection( { "client":apigee, "type":"books" } );
-                                                                   var globalPosition;
-                                                                   $('#create-button').bind('click', createBook);
-                                                                   
-                                                                   navigator.geolocation.getCurrentPosition(onSuccess, onError);
-                                                                   
-                                                                   // onSuccess Geolocation
-                                                                   function onSuccess(position) {
-                                                                   alert("Success "+ position.coords.latitude + "," + position.coords.longitude);
-                                                                   globalPosition = position;
-                                                                   //my_books = new Usergrid.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"order by created desc"} } );
-                                                                   
-                                                                   my_books = new Usergrid.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"select *"} } );
-                                                                   
-                                                                   refreshFeed();
-                                                                   
-                                                                   //var geostring = 'Latitude: ' + position.coords.latitude + '<br />' +
-                                                                   //'Longitude: '          + position.coords.longitude             + '<br />' +
-                                                                   //'Altitude: '           + position.coords.altitude              + '<br />' +
-                                                                   //'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                                                                   //'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                                                                   //'Heading: '            + position.coords.heading               + '<br />' +
-                                                                   //'Speed: '              + position.coords.speed                 + '<br />' +
-                                                                   //'Timestamp: '          +                                   position.timestamp          + '<br />';
-                                                                   //alert(geostring);
-                                                                   }
-                                                                   
-                                                                   // onError Callback receives a PositionError object
-                                                                   function onError(error) {
-                                                                   alert('code: '    + error.code    + '\n' +
-                                                                         'message: ' + error.message + '\n');
-                                                                   }
-                                                                   
-                                                                   function refreshFeed() {
-                                                                   // Actual network call
-                                                                   my_books.fetch(
-                                                                                  // Success Callback
-                                                                                  function () {
-                                                                                  $('#books-list').empty();
-                                                                                  
-                                                                                  while ( my_books.hasNextEntity() ) {
-                                                                                  var current_book = my_books.getNextEntity();
-                                                                                  
-                                                                                  // Output the book on the page
-                                                                                  $('#books-list').append('<li><h3>'+current_book.get('title')+'</h3><p>'+current_book.get('author')+'</p></li>');
-                                                                                  }
-                                                                                  // Re-apply jQuery Mobile styles
-                                                                                  $('#books-list').listview('refresh');
-                                                                                  },
-                                                                                  
-                                                                                  // Failure Callback
-                                                                                  function () { alert("read failed"); }
-                                                                                  );
-                                                                   }
-                                                                   
-                                                                   function createBook() {
-                                                                   new_book = { "title":$("#title-field").val(),
-                                                                   "author":$("#author-field").val() };
-                                                                   
-                                                                   my_books.addEntity(new_book, function (error, response) {
-                                                                                      if (error) {
-                                                                                      alert('write failed');
-                                                                                      } else {
-                                                                                      $("#title-field").val(""), $("#author-field").val("");
-                                                                                      refreshFeed();
-                                                                                      //This might not work in older browser
-                                                                                      //history.back();
-                                                                                      $('#page-new-book').dialog('close');
-                                                                                      }
-                                                                                      });
-                                                                   }
-                                                                   });
-            </script>-->
+                // If you lock down your sandbox or use any other app
+                // a user login is required to access the data.
+                //apigee.login("myuser","mypass");
+
+                // We now define my_books within the global scope
+                var my_books = new Apigee.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"select *"} } );
+                //my_books = new Usergrid.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"order by created desc"} } );
+
+                $(document).ready(function () {
+                    $('#create-button').bind('click', createBook);
+                    
+                    //navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+                    loadBooks();
+                });
+                
+                // onSuccess Geolocation
+                function onSuccess(position) {
+                    alert("Success "+ position.coords.latitude + "," + position.coords.longitude);
+                    
+                    loadBooks();
+                    
+                    //var geostring = 'Latitude: ' + position.coords.latitude + '<br />' +
+                    //'Longitude: '          + position.coords.longitude             + '<br />' +
+                    //'Altitude: '           + position.coords.altitude              + '<br />' +
+                    //'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                    //'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                    //'Heading: '            + position.coords.heading               + '<br />' +
+                    //'Speed: '              + position.coords.speed                 + '<br />' +
+                    //'Timestamp: '          +                                   position.timestamp          + '<br />';
+                    //alert(geostring);
+                }
+            
+                // onError Callback receives a PositionError object
+                function onError(error) {
+                    alert('code: '    + error.code    + '\n' +
+                          'message: ' + error.message + '\n');
+                }
+            
+                function loadBooks () {
+                    
+                    my_books.fetch( // Actual network call
+
+                        // Success Callback
+                        function () {
+                            $('#books-list').empty();
+                            
+                            while ( my_books.hasNextEntity() ) {
+                                var current_book = my_books.getNextEntity();
+
+                                // Output the book on the page
+                                $('#books-list').append('<li><h3>'+current_book.get('title')+'</h3><p>'+current_book.get('author')+'</p></li>');
+                            }
+                            
+                            // Re-apply jQuery Mobile styles
+                            $('#books-list').listview('refresh');
+                        },
+
+                        // Failure Callback
+                        function () { alert("read failed"); }
+                    );
+                }
+
+                function createBook() {
+
+                    new_book = { "title":$("#title-field").val(),
+                                    "name":$("#title-field").val(),
+                                "author":$("#author-field").val() };
+
+                    my_books.addEntity(new_book, function (error, response) {
+                        if (error) {
+                            alert('write failed');
+                        } else {
+                            $("#title-field").val(""), $("#author-field").val("");
+                            loadBooks();
+                            history.back();
+                        }
+                    });
+                }
+            </script>
     </head>
     <body>
         <br><br>
