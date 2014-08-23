@@ -17,7 +17,7 @@
                 (function() {
                   var global = global||this,
                     APIGEE_ORGNAME="rupenp",
-                    APIGEE_APPNAME="sandbox";
+                    APIGEE_APPNAME="hossip";
                     if("undefined"===typeof APIGEE_ORGNAME || "Your Org Name" === APIGEE_ORGNAME){
                         APIGEE_ORGNAME=prompt("What is the Organization Name you registered at http://apigee.com/usergrid ?\n(you can set this permanently on line 14)", "ORG NAME");
                     }
@@ -50,9 +50,11 @@
                 // If you lock down your sandbox or use any other app
                 // a user login is required to access the data.
                 //apigee.login("myuser","mypass");
-
+                
+                var my_patients = new Apigee.Collection( { "client":apigee, "type":"patients", "qs":{"limit":50, "ql":"select *"} } );
+                
                 // We now define my_books within the global scope
-                var my_books = new Apigee.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"select *"} } );
+                //var my_books = new Apigee.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"select *"} } );
                 //my_books = new Usergrid.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"order by created desc"} } );
 
                 $(document).ready(function () {
@@ -60,7 +62,8 @@
                     
                     //navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-                    loadBooks();
+                    //loadBooks();
+                    loadPatients();
                 });
                 
                 // onSuccess Geolocation
@@ -86,27 +89,27 @@
                           'message: ' + error.message + '\n');
                 }
             
-                function loadBooks () {
+                function loadPatients () {
                     
-                    my_books.fetch( // Actual network call
-
-                        // Success Callback
-                        function () {
-                            $('#books-list').empty();
-                            
-                            while ( my_books.hasNextEntity() ) {
-                                var current_book = my_books.getNextEntity();
-
-                                // Output the book on the page
-                                $('#books-list').append('<li><h3>'+current_book.get('title')+'</h3><p>'+current_book.get('author')+'</p></li>');
-                            }
-                            
-                            // Re-apply jQuery Mobile styles
-                            $('#books-list').listview('refresh');
-                        },
-
-                        // Failure Callback
-                        function () { alert("read failed"); }
+                    my_patients.fetch( // Actual network call
+                                   
+                       // Success Callback
+                       function () {
+                           $('#patient-list').empty();
+                           
+                           while ( my_patients.hasNextEntity() ) {
+                               var current_patient = my_patients.getNextEntity();
+                               
+                               // Output the patient on the page
+                               
+                               $('#patient-list').append('<li data-theme="c"><a href="#" data-transition="slide">'+current_patient.get('full_name')+'<span class="ui-li-count">'+current_patient.get('alert_count')+'</span></a></li>');
+                           }
+                           
+                           // Re-apply jQuery Mobile styles
+                           $('#patient-list').listview('refresh');
+                       },
+                       // Failure Callback
+                       function () { alert("read failed"); }
                     );
                 }
 
@@ -149,8 +152,8 @@
                 
                 <div data-role="fieldcontain" data-controltype="searchinput">
                     <input name="" id="Search" placeholder="" value="Search" type="search">
-                        </div>
-                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                </div>
+                <ul id="patient-list" data-role="listview" data-divider-theme="b" data-inset="true">
                     <li data-theme="c">
                         <a href="#" data-transition="slide">
                             #PatientID4321
@@ -165,19 +168,6 @@
                             <span class="ui-li-count">
                                 2
                             </span>
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            #PatientID3241
-                            <span class="ui-li-count">
-                                1
-                            </span>
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            #PatientID3142
                         </a>
                     </li>
                 </ul>
