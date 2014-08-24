@@ -168,7 +168,7 @@
 
                 function createFeedMessage() {
                     var d = new Date(); // for now
-                    //var curr_time = d.getHours() + ":" + d.getMinutes();
+                    var curr_time = d.getHours() + ":" + d.getMinutes();
                     //var curr_time = d.format("HH:ii");
                     var curr_date = d.getDay() + "/" + d.getMonth() + "/" + d.getFullYear();
                     
@@ -185,8 +185,8 @@
                         if (error) {
                             alert('write failed');
                         } else {
-                            $("#message_entry").val("Enter Message");
-                            //loadFeed();
+                            $("#message_entry").val("");
+                            loadFeed();
                             //history.back();
                         }
                     });
@@ -356,11 +356,11 @@
                 </h5>
             </div>
             <div data-role="fieldcontain" data-controltype="textarea">
-                <textarea name="" id="message_entry" placeholder="" data-mini="true">Enter Message</textarea>
+                <textarea name="" id="message_entry" placeholder="" data-mini="true"></textarea>
                 <input id="submit_message_entry" type="submit" data-theme="a" value="Submit">
             </div>
             
-            <div id="trpatient" data-role="tabbar" data-iconpos="left" data-theme="a">
+            <div id="trpatient" data-role="tabbar" data-iconpos="left" data-theme="a" data-position="fixed">
                 <ul>
                     <li>
                         <a href="#" data-transition="slidefade" data-theme="a" data-icon="info">
