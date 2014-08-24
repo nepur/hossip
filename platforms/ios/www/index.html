@@ -2,12 +2,12 @@
 <html>
     <head>
         <title>Hossip</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="apple-mobile-web-app-capable" content="yes">
             <meta name="apple-mobile-web-app-status-bar-style" content="black">
-            <script type="text/javascript" src="cordova-2.6.0.js"></script>
+            <link href="css/jquery.mobile-1.3.1.css" rel="stylesheet">
             <link href="css/codiqa.ext.min.css" rel="stylesheet">
-            <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
+            <script type="text/javascript" src="cordova-2.6.0.js"></script>
             <script src="js/jquery-1.9.1.min.js"></script>
             <script src="js/jquery.mobile-1.3.1.min.js"></script>
             <script src="js/codiqa.ext.min.js"></script>
@@ -59,7 +59,7 @@
                 //my_books = new Usergrid.Collection( { "client":apigee, "type":"books", "qs":{"limit":50, "ql":"order by created desc"} } );
 
                 $(document).ready(function () {
-                    $('#create-button').bind('click', createBook);
+                    $('#submit_message_entry').bind('click', createFeedMessage);
                     
                     //navigator.geolocation.getCurrentPosition(onSuccess, onError);
                    
@@ -96,12 +96,11 @@
                        // Success Callback
                        function () {
                            $('#patient-list').empty();
-
                            while ( my_patients.hasNextEntity() ) {
                                var current_patient = my_patients.getNextEntity();
                                
                                // Output the patient on the page
-                               $('#patient-list').append('<li data-theme="c"><a href="#feed?pid=1234" data-transition="slide">'+current_patient.get('full_name')+'<span class="ui-li-count">'+current_patient.get('alert_count')+'</span></a></li>');
+                               $('#patient-list').append('<li data-theme="a"><a href="#feed?pid=1234" data-transition="slide">'+current_patient.get('full_name')+'<span class="ui-li-count">'+current_patient.get('alert_count')+'</span></a></li>');
                            }
                            
                            // Re-apply jQuery Mobile styles
@@ -123,54 +122,82 @@
                                 var current_entry = my_stream.getNextEntity();
                                       
                                 // Output the patient on the page
-                                $('#feed-stream').append('<div data-controltype=\"textblock\"><p><span style=\"font-size: small; font-family: \'comic sans ms\', sans-serif;\" data-mce-style=\"font-size: small; font-family: \'comic sans ms\', sans-serif;\">');
+                                $('#feed-stream').append('<div data-theme="a" data-controltype=\"textblock\"><p><span style=\"font-size: small; font-family: \'comic sans ms\', sans-serif;\" data-mce-style=\"font-size: small; font-family: \'comic sans ms\', sans-serif;\">');
                                 $('#feed-stream').append('[' + current_entry.get('time') + ' ' + current_entry.get('date') +']&nbsp;');
                                 $('#feed-stream').append(current_entry.get('author') + ' : ' + current_entry.get('message'));
-                                $('#feed-stream').append('</span></p></div><hr style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">');
+                                $('#feed-stream').append('</span></p></div><hr data-theme="a" style="height:1px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">');
                             }
                                                                                         
                             // Re-apply jQuery Mobile styles
-                            $('#feed-stream').collapsibleset('refresh');
+                            //$('#feed-stream').collapsibleset('refresh');
                             //$('#feed-stream').listview('refresh');
                         },
                         // Failure Callback
                         function () { alert("read failed"); }
                     );
                 }
-            
-                $(document).on('pageshow', '#feed', function(event, ui) {
-                               loadFeed();
-                               } );
-            
+                
+                var pollState = false;
+                function pollFeed() {
+                  setTimeout(function() {
+                    //Ugly and has to be a better way to deal with async promise binding to other vars
+                    //alert('Here');
+                    if(pollState) {
+                        loadFeed();
+                        pollFeed();
+                    }
+                  }, 1000);
+                };
+
                 // Try pagebeforeshow also
                 //$(document).on('pageshow', '#feed', function (event, ui) {
                 //       var parameters = $(this).data("url").split("?")[1];
                 //       parameter = parameters.replace("parameter=","");
                 //       alert(parameter);
                 //});
-                           
-                function createBook() {
+                $(document).on('pageshow', '#feed', function(event, ui) {
+                               loadFeed();
+                               pollState = true;
+                               pollFeed();
+                               } );
+                               
+                $(document).on('pagehide', '#feed', function(event, ui) {
+                               pollState = false;
+                               } );
 
-                    new_book = { "title":$("#title-field").val(),
-                                    "name":$("#title-field").val(),
-                                "author":$("#author-field").val() };
 
-                    my_books.addEntity(new_book, function (error, response) {
+                function createFeedMessage() {
+                    var d = new Date(); // for now
+                    //var curr_time = d.getHours() + ":" + d.getMinutes();
+                    //var curr_time = d.format("HH:ii");
+                    var curr_date = d.getDay() + "/" + d.getMonth() + "/" + d.getFullYear();
+                    
+                    new_message = { "time": curr_time,
+                                    "date": curr_date,
+                                    "message":$("#message_entry").val(),
+                                    "message_type" : "message",
+                                    "source": "user",
+                                    "author":"Gregory House",
+                                    "mrn": "12345678"
+                                  };
+
+                    my_stream.addEntity(new_message, function (error, response) {
                         if (error) {
                             alert('write failed');
                         } else {
-                            $("#title-field").val(""), $("#author-field").val("");
-                            loadBooks();
-                            history.back();
+                            $("#message_entry").val("Enter Message");
+                            //loadFeed();
+                            //history.back();
                         }
                     });
                 }
+                
             </script>
     </head>
     <body>
         <br><br>
         <div data-role="page" data-control-title="Home" id="home">
-            <div data-theme="c" data-role="header" data-position="fixed">
+            <div data-theme="a" data-role="header" data-position="fixed">
                 <h1 id="bar">
                     #hossip
                 </h1>
@@ -179,7 +206,7 @@
                 <div id="feed" data-role="navbar" data-iconpos="left">
                     <ul>
                         <li>
-                            <a href="#settings" data-transition="fade" data-theme="" data-icon="gear">
+                            <a href="#settings" data-transition="fade" data-theme="a" data-icon="gear">
                                 Settings
                             </a>
                         </li>
@@ -189,8 +216,8 @@
                 <div data-role="fieldcontain" data-controltype="searchinput">
                     <input name="" id="Search" placeholder="" value="Search" type="search">
                 </div>
-                <ul id="patient-list" data-role="listview" data-divider-theme="b" data-inset="true">
-                    <li data-theme="c">
+                <ul id="patient-list" data-role="listview" data-divider-theme="a" data-inset="true">
+                    <li data-theme="a">
                         <a href="#" data-transition="slide">
                             #PatientID4321
                             <span class="ui-li-count">
@@ -198,7 +225,7 @@
                             </span>
                         </a>
                     </li>
-                    <li data-theme="c">
+                    <li data-theme="a">
                         <a href="#page1" data-transition="slide">
                             #PatientID1234
                             <span class="ui-li-count">
@@ -208,10 +235,10 @@
                     </li>
                 </ul>
             </div>
-            <div id="trhome" data-role="tabbar" data-iconpos="left" data-theme="c">
+            <div id="trhome" data-role="tabbar" data-iconpos="left" data-theme="a">
                 <ul>
                     <li>
-                        <a href="#" data-transition="slidefade" data-theme="" data-icon="plus">
+                        <a href="#" data-transition="slidefade" data-theme="a" data-icon="plus">
                             Join care team
                         </a>
                     </li>
@@ -219,7 +246,7 @@
             </div>
         </div>
         <div data-role="page" data-control-title="Settings" id="settings">
-            <div id="hrsettings" data-theme="c" data-role="header">
+            <div id="hrsettings" data-theme="a" data-role="header">
                 <a id="bksettings" data-role="button" data-rel="back" href="#home" class="ui-btn-left">
                     Back
                 </a>
@@ -235,20 +262,11 @@
                     <p>
                     <span style="font-family: 'comic sans ms', sans-serif;">
                         <span style="font-size: medium;" data-mce-style="font-size: medium;">
-                            Name: FirstName,&nbsp;
-                        </span>
-                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
-                            Last
-                        </span>
-                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
-                            nam
-                        </span>
-                        <span style="font-size: medium;" data-mce-style="font-size: medium;">
-                            e
+                            Name: Gregory,&nbsp;House
                             <br>
                         </span>
                         <span style="font-size: medium;" data-mce-style="font-size: medium;">
-                            Role: Attending﻿
+                            Role: Attending
                         </span>
                     </span>
                     </p>
@@ -260,7 +278,7 @@
                         </legend>
                         <input id="checkbox3" name="" type="checkbox">
                             <label for="checkbox3">
-                                Ecnounters
+                                Encounters
                             </label>
                             <input id="checkbox6" name="" type="checkbox">
                                 <label for="checkbox6">
@@ -272,7 +290,7 @@
                                     </label>
                                     <input id="checkbox2" name="" type="checkbox">
                                         <label for="checkbox2">
-                                            Rad
+                                            Radiology
                                         </label>
                                         <input id="checkbox1" name="" type="checkbox">
                                             <label for="checkbox1">
@@ -288,21 +306,21 @@
         </div>
         <!-- Feed page starts here -->
         <div data-role="page" data-control-title="Patient" id="feed">
-            <div data-theme="c" data-role="header" data-position="fixed">
-                <h2>
-                    #Patient4321
-                </h2>
-                <a data-role="button" data-rel="back" href="#home" data-inline="true" class="ui-btn-left">
+            <div data-theme="a" data-role="header" data-position="fixed">
+                <a id="bksettings2" data-role="button" data-rel="back" href="#home" class="ui-btn-left">
                     Back
                 </a>
+                <h3>
+                    Stan Jones
+                </h3>
             </div>
             
-            <div data-role="fieldcontain" data-controltype="searchinput">
+            <div data-role="fieldcontain" data-controltype="searchinput" data-theme="a">
                 <input name="Search" id="searchinput2" placeholder="Search" value="" type="search"
                     data-mini="true">
             </div>
             
-            <div id="feed-stream" data-role="content" data-role="collapsible-set" >
+            <div id="feed-stream" data-role="content" data-role="collapsible-set" data-theme="b">
                 <div data-controltype="textblock">
                     <p>
                     <span style="font-size: small; font-family: 'comic sans ms', sans-serif;"
@@ -336,20 +354,21 @@
                 <h5>
                     Yesterday [8/23/2014]
                 </h5>
-                <div data-role="fieldcontain" data-controltype="textarea">
-                    <textarea name="" id="textarea1" placeholder="" data-mini="true"></textarea>
-                </div>
-                <input type="submit" data-theme="c" value="Submit">
             </div>
-            <div id="trpatient" data-role="tabbar" data-iconpos="left" data-theme="c">
+            <div data-role="fieldcontain" data-controltype="textarea">
+                <textarea name="" id="message_entry" placeholder="" data-mini="true">Enter Message</textarea>
+                <input id="submit_message_entry" type="submit" data-theme="a" value="Submit">
+            </div>
+            
+            <div id="trpatient" data-role="tabbar" data-iconpos="left" data-theme="a">
                 <ul>
                     <li>
-                        <a href="#" data-transition="slidefade" data-theme="" data-icon="info">
+                        <a href="#" data-transition="slidefade" data-theme="a" data-icon="info">
                             Team Members
                         </a>
                     </li>
                     <li>
-                        <a href="#" data-transition="fade" data-theme="" data-icon="delete">
+                        <a href="#" data-transition="fade" data-theme="a" data-icon="delete">
                             Leave care team
                         </a>
                     </li>
